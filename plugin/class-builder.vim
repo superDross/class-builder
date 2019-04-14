@@ -13,9 +13,12 @@ endfunction
 
 function! PythonClassBuilder(classname, params)
   let param_string = FormatParams(a:params)
+  if a:params !=# []
+    let param_string = ', ' . param_string
+  endif
   let class = [ 
         \ 'class ' . a:classname . ':',
-        \ '    def __init__(self, ' . param_string . '):',
+        \ '    def __init__(self' . param_string . '):',
         \]
   let class += map(a:params, "'        self.' . v:val . ' = ' . v:val")
   call append(line('.'), class)
