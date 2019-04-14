@@ -1,4 +1,4 @@
-" class-builder.vim - ClassBuilder
+" class-builder.vim - Class Builder
 " Author:       David Ross <https://github.com/superDross/>
 " Version:      0.1
 
@@ -42,6 +42,9 @@ function! ClassBuilder(...)
     let class = PythonClassBuilder(classname, params)
   elseif ext ==# 'js'
     let class = JavaScriptClassBuilder(classname, params)
+  else
+    echoerr ext . ' files are not supported'
+    return 1
   endif
   call cursor(line('.') + len(class), len(class[-1]))
 endfunction
