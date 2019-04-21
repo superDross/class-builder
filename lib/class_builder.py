@@ -68,4 +68,5 @@ class ClassBuilder:
         class_builder = method_dict[self.ext]
         class_list = class_builder()
         b = vim.current.buffer
-        b.append(class_list)
+        line = int(vim.eval("line('.')"))
+        b.append(class_list, line)
