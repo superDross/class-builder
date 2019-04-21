@@ -14,7 +14,7 @@ python_module_path = os.path.abspath('%s/../lib' % (plugin_path))
 # Append it to the system paths
 sys.path.append(python_module_path)
 
-from class_builder import ClassBuilder
+from class_builder import class_factory
 EOF
 
-command! -nargs=+ Class :python3 ClassBuilder(<f-args>).build()
+command! -nargs=+ Class :python3 class_factory(<f-args>)
