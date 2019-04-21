@@ -19,7 +19,7 @@ class ClassBuilder:
 
     def param_str(self):
         param_str = ', '.join(self.params)
-        if self.ext and self.ext == 'py':
+        if self.params and self.ext == 'py':
             param_str = f', {param_str}'
         return param_str
 
