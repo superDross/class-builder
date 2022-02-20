@@ -25,6 +25,22 @@ function! PythonClassBuilder(classname, params)
   return class
 endfunction
 
+function! LuaClassBuilder(classname, params)
+  let param_string = FormatParams(a:params)
+  let class = [
+	\ a:classname . ' = {}',
+        \ a:classname . '.__index = ' . a:classname,
+        \ '',
+        \ 'function ' . a:classname . ':create(' . param_string . ')',
+        \ '  local obj = {}',
+        \ '  setmetatable(obj, ' . a:classname . ')',
+        \]
+  let class += map(a:params, "'  obj.' . v:val . ' = ' . v:val")
+  let class += ['  return obj', 'end']
+  call append(line('.'), class)
+  return class
+endfunction
+
 function! JavaScriptClassBuilder(classname, params)
   let param_string = FormatParams(a:params)
   let class = [
@@ -43,6 +59,8 @@ function! ClassBuilder(...)
   let params = a:000[1:]
   if ext ==# 'py'
     let class = PythonClassBuilder(classname, params)
+  elseif ext ==# 'lua'
+    let class = LuaClassBuilder(classname, params)
   elseif ext ==# 'js'
     let class = JavaScriptClassBuilder(classname, params)
   else
